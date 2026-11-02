@@ -18,7 +18,11 @@ Ungoogled Chromium with declarative instances and managed extensions.
 let
   extensions = inputs.ungoogled.lib.mkExtensions {
     inherit pkgs lib;
-    settings.sponsorblock = { alreadyInstalled = true; };
+
+    settings = {
+      ublock-origin = import ./ublock-settings.nix;
+      sponsorblock.alreadyInstalled = true;
+    };
   };
 in
 {
@@ -51,7 +55,7 @@ in
 
 ## Extensions
 
-Each `extensions/<name>/default.nix` takes `{ pkgs, lib }` and returns:
+Each `extensions/<name>/default.nix` takes `{ pkgs, lib, settings ? {} }` and returns:
 
 | field | meaning |
 | --- | --- |
@@ -64,5 +68,19 @@ Each `extensions/<name>/default.nix` takes `{ pkgs, lib }` and returns:
 Policies are collected from the instances' extensions automatically. Bare
 packages are accepted too and load without a managed policy.
 
-`lib.mkExtensions` accepts `settings.<name>` for extensions with knobs, e.g.
-`settings.sponsorblock = { alreadyInstalled = true; }`.
+`lib.mkExtensions` accepts `settings.<name>` for extensions with knobs.
+
+### uBlock Origin settings
+
+All uBlock Origin settings are consumer-supplied; the flake has no defaults.
+
+| setting | type | meaning |
+| --- | --- | --- |
+| `userFilters` | string, path or list of lines | Managed user filters; omitted leaves the profile's filters alone |
+| `filterLists` | list of list IDs | Enabled filter lists; omitted leaves the profile's lists alone |
+| `adminSettings` | attrs | Managed admin settings; omitted leaves them alone |
+
+### SponsorBlock settings
+
+Any key in SponsorBlock's managed schema, e.g.
+`settings.sponsorblock = { alreadyInstalled = true; };`.

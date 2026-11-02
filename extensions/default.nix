@@ -5,7 +5,10 @@
 }:
 
 {
-  ublock-origin = import ./ublock-origin { inherit pkgs lib; };
+  ublock-origin = import ./ublock-origin {
+    inherit pkgs lib;
+    settings = settings.ublock-origin or { };
+  };
 
   sponsorblock = import ./sponsorblock {
     inherit pkgs lib;
