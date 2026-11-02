@@ -145,7 +145,7 @@ let
 
     ! Nov 27, 2025 https://www.youtube.com
     !www.youtube.com###related
-    !www.youtube.com###secondary
+    www.youtube.com###secondary
     !www.youtube.com###description-inline-expander > .ytd-watch-metadata.style-scope
 
     ! Jan 4, 2026 https://aistudio.google.com
